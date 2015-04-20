@@ -12,14 +12,12 @@ samplesPerBit  = Fs/data_rate;
 k=1;
 for i = 1:N
     for j = 1:samplesPerBit  % these loops create the
-        y(k) = data(i);      % bit stream: y is 8000hz(8000 samples per second), data is 1000 samples per second
+        y(k) = data(i);      % bit stream: y is 8000khz(8000 samples per second), data is 1000 samples per second
         k=k+1;
     end 
 end  
-end_time = length(y)*(1/Fs);
-t = linspace(0,0.05,length(y));
+
+t = 0:0.000001:0.01; % 0.01 seconds
 fc = 2000;
 carrier = cos(2*pi*fc*t);
-plot(carrier)
 
-modulated_signal = carrier.*y;
