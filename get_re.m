@@ -1,5 +1,6 @@
+warning('off','all')
 for index = 0:1:12
-    for tis = 1:1:100
+    for tis = 1:1:1000
         temp = [];
         temp = [temp,main(index)];
         val = mean(temp);
