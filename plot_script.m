@@ -1,4 +1,5 @@
- % the code is to get all the related data from a single execution
+clear all 
+% the code is to get all the related data from a single execution
     snr = 4; % 4db
     N = 500;
     data_rate = 1000;
@@ -18,7 +19,7 @@
     end  
 
     end_time = length(y)*(1/Fs);
-    t = linspace(0,0.05,length(y));
+    t = linspace(0,end_time,length(y));% Duration of the 
     fc = 2000;
     carrier = cos(2*pi*fc*t);
     % plot(carrier)
@@ -40,37 +41,48 @@
     end
     ber = length(find(data==new_data'))/length(data);
 %%%%
-iter = 1:100;
-cell_event1 = 'Binary signal';
-cell_event2 =  'Sampled signal';
-cell_event3 = 'Filtered signal';
-cell_event4 = 'Modulated signal';
-cell_event5 = 'Received signal';
+% % iter = 1:100;
+% % cell_event1 = 'Binary signal';
+% % cell_event2 =  'Sampled signal';
+% % cell_event3 = 'Filtered signal';
+% % cell_event4 = 'Modulated signal';
+% % cell_event5 = 'Received signal';
+% % 
+% % events = {cell_event1;cell_event2;cell_event3;cell_event4;cell_event5};
+% % for iter_event = 1:length(events)
+% %     cell_event = events{iter_event};
+% %     appe = ' for SNR=4 dBs'; 
+% %     str = strcat(cell_event,appe);
+% %     switch cell_event
+% %         case{'Binary signal'}
+% %             stem(data_t(iter),data(iter))
+% %             title(str)
+% %         case{'Sampled signal'}
+% %             stem(t(iter),y(iter))
+% %             title(str)
+% %         case{'Modulated signal'}
+% %             stem(t(iter),modulated_signal(iter))
+% %             title(str)
+% %         case{'Received signal'}
+% %             stem(t(iter),noised_signal(iter))
+% %             title(str)
+% %         case{'Filtered signal'}
+% %             stem(data_t(iter),Filtered_signal(iter)) 
+% %             title(str)
+% %     end
+% %      print(str,'-dpng');
+% % end
 
-events = {cell_event1;cell_event2;cell_event3;cell_event4;cell_event5};
-for iter_event = 1:length(events)
-    cell_event = events{iter_event};
-    appe = ' for SNR=4 dBs'; 
-    str = strcat(cell_event,appe);
-    switch cell_event
-        case{'Binary signal'}
-            stem(data_t(iter),data(iter))
-            title(str)
-        case{'Sampled signal'}
-            stem(y(iter))
-            title(str)
-        case{'Modulated signal'}
-            stem(t(iter),modulated_signal(iter))
-            title(str)
-        case{'Received signal'}
-            stem(t(iter),noised_signal(iter))
-            title(str)
-        case{'Filtered signal'}
-            stem(Filtered_signal(iter)) 
-            title(str)
-    end
-     print(str,'-dpng');
-end
+%fft part 
+% -	Sampled signal
+tk = carrier;
+L = length(tk);
+NEET = 2^nextpow2(L);
+Y = fft(tk,NEET)/L;
+f = Fs/2*linspace(0,1,NEET/2+1);
+plot(f,2*abs(Y(1:NEET/2+1)));
+%% -	Modulated signal x(t)
+
 
 
 
